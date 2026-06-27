@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS Finder metadata
+.DS_Store
+
+# Project data dirs -- large/generated files hosted on Google Drive instead
+# of git (see README.md in each folder for download instructions). Keep the
+# placeholder README.md tracked, ignore everything else.
+checkpoints/*
+!checkpoints/README.md
+data/*
+!data/README.md
+result/*
+!result/README.md
