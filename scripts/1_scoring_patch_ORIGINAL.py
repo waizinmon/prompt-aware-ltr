@@ -22,29 +22,6 @@ WHY:
 WHAT CHANGES:
     Nothing about training. Nothing about the model. Only the function
     that converts a predictor score into a final scheduling priority.
-
--------------------------------------------------------------------------
-CORRECTION (see compute_score_with_prompt_length below):
-    The original version of this function contained two bugs:
-
-    1. SIGN ERROR -- this file's convention (see rank_requests()) is
-       LOWER score = scheduled SOONER. The original code computed
-       length_term = 1.0 / prompt_len (larger for SHORT prompts) and
-       then ADDED it to the score, which made short prompts get a
-       LARGER (i.e. lower-priority) final score -- the opposite of the
-       intended behavior described in the original comment. Fixed by
-       subtracting the length term instead of adding it.
-
-    2. TOKENIZATION MISMATCH -- ltr_score was computed from a
-       truncated tokenization (max_length=512) while prompt_len was
-       computed from a separate, untruncated tokenizer call, so the
-       two signals could disagree on what "the prompt" was for long
-       inputs. Fixed by deriving both from the same tokenize call.
-
-    Only compute_score_with_prompt_length() below was changed.
-    predict_with_model(), compute_score_original(), and rank_requests()
-    are unchanged from the original implementation.
--------------------------------------------------------------------------
 """
 
 from typing import List
@@ -91,7 +68,7 @@ def compute_score_original(ltr_model, tokenizer, prompt: str) -> float:
 
 
 # ---------------------------------------------------------------------------
-# AFTER (this extension) -- CORRECTED VERSION
+# AFTER (this extension)
 # ---------------------------------------------------------------------------
 def compute_score_with_prompt_length(
     ltr_model,
@@ -110,18 +87,11 @@ def compute_score_with_prompt_length(
     alpha + beta should sum to 1.0 so the combined score stays in a
     comparable range to the original ltr_score for any downstream
     sorting / threshold logic that assumes that range.
-
-    CORRECTED: the length term is now SUBTRACTED (not added), and
-    prompt_len is computed from the SAME truncated tokenization used
-    for ltr_score. See module docstring above for full explanation.
     """
     ltr_score = predict_with_model(ltr_model, tokenizer, prompt)
 
-    # Tokenize with the SAME truncation/max_length used inside
-    # predict_with_model(), so prompt_len reflects the same prompt
-    # representation as ltr_score (fixes the tokenization mismatch).
-    enc = tokenizer(prompt, truncation=True, max_length=512)
-    prompt_len = len(enc["input_ids"])
+    # Prompt length is known exactly -- zero prediction cost.
+    prompt_len = len(tokenizer(prompt)["input_ids"])
     prompt_len = max(prompt_len, 1)  # guard against div-by-zero
 
     # Inverse length: shorter prompts -> larger term -> higher priority
@@ -132,11 +102,7 @@ def compute_score_with_prompt_length(
     # NOTE: tune this scaling constant empirically once you have real
     # ltr_score distributions from your trained OPT-125M predictor.
     SCALE = 100.0
-
-    # FIX: subtract instead of add, so a larger length_term (shorter
-    # prompt) DECREASES the score -- correctly giving short prompts
-    # higher priority under the lower-score-goes-first convention.
-    score = alpha * ltr_score - beta * (length_term * SCALE)
+    score = alpha * ltr_score + beta * (length_term * SCALE)
     return score
 
 
@@ -182,7 +148,7 @@ if __name__ == "__main__":
             return len(prompt) * 0.05
 
     class DummyTokenizer:
-        def __call__(self, text, **kwargs):
+        def __call__(self, text):
             return {"input_ids": text.split()}
 
     model = DummyLTRModel()
@@ -199,6 +165,6 @@ if __name__ == "__main__":
     for i in rank_requests(model, tok, requests, use_prompt_length=False):
         print(f"  -> {requests[i]!r}")
 
-    print("\nLTR + Prompt Length ranking (corrected):")
+    print("\nLTR + Prompt Length ranking:")
     for i in rank_requests(model, tok, requests, use_prompt_length=True):
         print(f"  -> {requests[i]!r}")
