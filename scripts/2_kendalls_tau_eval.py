@@ -94,7 +94,8 @@ def predict_score(model, tokenizer, device, prompt: str) -> float:
 def compute_combined_score(ltr_score: float, prompt_len: int, alpha: float, beta: float) -> float:
     prompt_len = max(prompt_len, 1)
     length_term = (1.0 / prompt_len) * 100.0  # same SCALE as in 1_scoring_patch.py
-    return alpha * ltr_score + beta * length_term
+    # FIX: subtract instead of add -- same sign bug as in 1_scoring_patch.py's
+    return alpha * ltr_score - beta * length_term
 
 
 def main():
