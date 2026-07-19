@@ -42,6 +42,16 @@ class BenchmarkResult:
     mean_latency_s_per_token: float = 0.0
     p90_latency_s_per_token: float = 0.0
     n_requests: int = 0
+    # Diagnostic: how many/what fraction of requests in this batch hit the
+    # max_tokens generation cap (finish_reason == "length") instead of
+    # stopping naturally on EOS. per_request_latencies is computed as
+    # elapsed / n_tokens using a SHARED batch elapsed time -- if most/all
+    # requests hit the same cap, n_tokens is identical across the batch and
+    # per_request_latencies collapses to a near-constant value, which makes
+    # p90/mean ratios (and possibly mean_latency itself) uninformative for
+    # that batch. A high frac_hit_max_tokens is a red flag for that.
+    n_hit_max_tokens: int = 0
+    frac_hit_max_tokens: float = 0.0
 
 
 def load_dataset(path: str, max_requests: int = None) -> List[dict]:
@@ -243,12 +253,23 @@ def run_single_benchmark(llm, scheduler_name, dataset, request_rate, models, tok
     mean_lat = sum(per_request_latencies) / n if n else 0.0
     p90_lat = per_request_latencies[int(0.9 * n)] if n else 0.0
 
+    # Diagnostic: count requests that hit the max_tokens cap rather than
+    # stopping naturally. finish_reason is "length" when generation was
+    # cut off by max_tokens, "stop" when the model produced EOS on its own.
+    n_hit_cap = sum(
+        1 for output in outputs
+        if getattr(output.outputs[0], "finish_reason", None) == "length"
+    )
+    frac_hit_cap = (n_hit_cap / len(outputs)) if outputs else 0.0
+
     return BenchmarkResult(
         scheduler=scheduler_name,
         request_rate=request_rate,
         mean_latency_s_per_token=mean_lat,
         p90_latency_s_per_token=p90_lat,
         n_requests=n,
+        n_hit_max_tokens=n_hit_cap,
+        frac_hit_max_tokens=round(frac_hit_cap, 4),
     )
 
 
@@ -344,7 +365,12 @@ def main():
             print(f"\nRunning scheduler={scheduler_name} request_rate={rate} req/s ...")
             result = run_single_benchmark(llm, scheduler_name, dataset, rate, models, tokenizers, max_tokens=args.max_tokens, max_rate=max(args.request_rates))
             print(f"  mean={result.mean_latency_s_per_token:.4f} s/tok  "
-                  f"p90={result.p90_latency_s_per_token:.4f} s/tok")
+                  f"p90={result.p90_latency_s_per_token:.4f} s/tok  "
+                  f"capped={result.frac_hit_max_tokens:.1%} ({result.n_hit_max_tokens}/{result.n_requests})")
+            if result.frac_hit_max_tokens > 0.5:
+                print(f"  [WARNING] Over half this batch hit the max_tokens cap -- "
+                      f"per-request latency (elapsed/n_tokens) may be near-constant "
+                      f"for this batch, making p90/mean comparisons unreliable here.")
             all_results.append(result.__dict__)
 
     with open(args.output, "w") as f:
