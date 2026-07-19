@@ -69,8 +69,6 @@ Run in order from the repository root:
 | 2 | `scripts/2_kendalls_tau_eval.py` | Evaluates ranking quality via Kendall's Tau | CPU/MPS |
 | 3 | `scripts/3_vllm_benchmark.py` | Runs the vLLM latency-vs-request-rate benchmark across schedulers | CUDA GPU (e.g. Colab) |
 | 4 | `scripts/4_plot_results.py` | Plots the latency comparison chart from step 3's output | CPU |
-| 5 | `scripts/5_extended_metrics.py` | Computes throughput (from step 3's result files) and, optionally, live GPU memory/utilization profiling | CPU (GPU optional, for `--run_gpu_profiling`) |
-| 6 | `scripts/6_hol_blocking_eval.py` | Estimates Head-of-Line blocking reduction (p90/mean latency ratio, latency-vs-rate slope) from step 3's result files | CPU |
 
 ## Citation
 
