@@ -19,7 +19,7 @@ DATASET_COLORS = {
     "dataset2_eval": "#D97706",
 }
 
-INPUT_PATH = "extended_metrics.json"
+INPUT_PATH = "result/extended_metrics.json"
 
 with open(INPUT_PATH) as f:
     ext_data = json.load(f)
@@ -56,6 +56,6 @@ for spine in ["top", "right"]:
     ax.spines[spine].set_visible(False)
 
 fig.tight_layout()
-fig.savefig("throughput_by_scheduler.png", dpi=200, bbox_inches="tight")
+fig.savefig("result/throughput_by_scheduler.png", dpi=200, bbox_inches="tight")
 plt.show()
 print("Saved throughput_by_scheduler.png")

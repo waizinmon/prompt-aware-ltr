@@ -43,13 +43,13 @@ SCHEDULER_ORDER = ["fcfs", "classification", "ltr", "ltr_promptlen"]
 
 DATASETS = {
     "dataset1_eval": {
-        "input": "ttft_dataset1.json",
-        "output": "ttft_dataset1.png",
+        "input": "result/ttft_dataset1.json",
+        "output": "result/ttft_dataset1.png",
         "title": "Dataset 1 (in-distribution)",
     },
     "dataset2_eval": {
-        "input": "ttft_dataset2.json",
-        "output": "ttft_dataset2.png",
+        "input": "result/ttft_dataset2.json",
+        "output": "result/ttft_dataset2.png",
         "title": "Dataset 2 (out-of-distribution)",
     },
 }

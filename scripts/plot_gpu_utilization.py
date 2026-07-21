@@ -7,7 +7,7 @@ DATASET_LABELS = {
     "dataset2_eval": "Dataset 2 (out-of-distribution)",
 }
 
-INPUT_PATH = "extended_metrics.json"
+INPUT_PATH = "result/extended_metrics.json"
 
 with open(INPUT_PATH) as f:
     ext_data = json.load(f)
@@ -57,6 +57,6 @@ else:
     ax1.set_title("GPU Resource Utilization by Dataset", fontsize=13, fontweight="bold")
     ax1.grid(True, axis="y", alpha=0.3)
     fig.tight_layout()
-    fig.savefig("gpu_utilization.png", dpi=200, bbox_inches="tight")
+    fig.savefig("result/gpu_utilization.png", dpi=200, bbox_inches="tight")
     plt.show()
     print("Saved gpu_utilization.png")

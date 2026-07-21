@@ -42,12 +42,12 @@ SCHEDULER_ORDER = ["fcfs", "classification", "ltr", "ltr_promptlen"]
 DATASETS = {
     "dataset1_eval": {
         "input": "result/results_dataset1.json",
-        "output": "latency_dataset1.png",
+        "output": "result/latency_dataset1.png",
         "title": "Dataset 1 (in-distribution)",
     },
     "dataset2_eval": {
         "input": "result/results_dataset2.json",
-        "output": "latency_dataset2.png",
+        "output": "result/latency_dataset2.png",
         "title": "Dataset 2 (out-of-distribution)",
     },
 }

@@ -35,7 +35,7 @@ DATASET_COLORS = {
     "dataset2_eval": "#D97706",
 }
 
-INPUT_PATH = "hol_blocking_metrics.json"
+INPUT_PATH = "result/hol_blocking_metrics.json"
 
 
 def load_data(path):
@@ -87,7 +87,7 @@ def main():
         ylabel="p90 / mean latency ratio",
         title="Tail Latency Ratio (high load)",
         suptitle="HOL Blocking Indicator: Tail Latency Ratio\n(lower = less Head-of-Line blocking)",
-        output_path="hol_blocking_ratio.png",
+        output_path="result/hol_blocking_ratio.png",
     )
 
     plot_metric(
@@ -97,7 +97,7 @@ def main():
         ylabel="Latency slope (s/token per req/s)",
         title="Latency-vs-Request-Rate Slope",
         suptitle="HOL Blocking Indicator: Latency Slope\n(lower = less Head-of-Line blocking)",
-        output_path="hol_blocking_slope.png",
+        output_path="result/hol_blocking_slope.png",
     )
 
 

@@ -106,6 +106,8 @@ def main():
                         help="Path to jsonl test set: {prompt, true_output_length}")
     parser.add_argument("--alpha", type=float, default=0.7)
     parser.add_argument("--beta", type=float, default=0.3)
+    parser.add_argument("--output", default="tau_results.json",
+                        help="Path to write the tau results JSON to (e.g. result/tau_results.json)")
     args = parser.parse_args()
 
     records = load_test_set(args.test_set)
@@ -140,7 +142,7 @@ def main():
     print(f"Delta                     {tau_extended - tau_original:+.4f}")
     print("=" * 60)
 
-    out_path = "tau_results.json"
+    out_path = args.output
     with open(out_path, "w") as f:
         json.dump({
             "tau_original": tau_original,

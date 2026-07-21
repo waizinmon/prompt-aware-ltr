@@ -16,8 +16,8 @@ path resolves correctly).
 import json
 import matplotlib.pyplot as plt
 
-INPUT_PATH = "tau_results.json"
-OUTPUT_PATH = "kendalls_tau_table.png"
+INPUT_PATH = "result/tau_results.json"
+OUTPUT_PATH = "result/kendalls_tau_table.png"
 
 
 def load_data(path):
