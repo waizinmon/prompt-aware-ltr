@@ -42,6 +42,12 @@ class BenchmarkResult:
     mean_latency_s_per_token: float = 0.0
     p90_latency_s_per_token: float = 0.0
     n_requests: int = 0
+    # Time to First Token -- time from request arrival to first generated
+    # token, pulled directly from vLLM's own per-request metrics (not
+    # derived from elapsed/n_tokens, so it isn't affected by the
+    # max_tokens-cap issue that affects mean_latency_s_per_token).
+    mean_ttft_s: float = 0.0
+    p90_ttft_s: float = 0.0
 
 
 def load_dataset(path: str, max_requests: int = None) -> List[dict]:
@@ -243,12 +249,30 @@ def run_single_benchmark(llm, scheduler_name, dataset, request_rate, models, tok
     mean_lat = sum(per_request_latencies) / n if n else 0.0
     p90_lat = per_request_latencies[int(0.9 * n)] if n else 0.0
 
+    # Time to First Token, using vLLM's own per-request metrics
+    # (arrival_time, first_token_time) rather than the shared-elapsed
+    # approximation used for mean_latency_s_per_token above.
+    ttfts = []
+    for output in outputs:
+        m = getattr(output, "metrics", None)
+        if m is not None and m.first_token_time is not None and m.arrival_time is not None:
+            ttfts.append(m.first_token_time - m.arrival_time)
+    ttfts.sort()
+    n_ttft = len(ttfts)
+    mean_ttft = sum(ttfts) / n_ttft if n_ttft else 0.0
+    p90_ttft = ttfts[int(0.9 * n_ttft)] if n_ttft else 0.0
+    if n_ttft < len(outputs):
+        print(f"  [WARNING] TTFT metrics missing for {len(outputs) - n_ttft}/{len(outputs)} "
+              f"requests -- vLLM may not be populating output.metrics in this version.")
+
     return BenchmarkResult(
         scheduler=scheduler_name,
         request_rate=request_rate,
         mean_latency_s_per_token=mean_lat,
         p90_latency_s_per_token=p90_lat,
         n_requests=n,
+        mean_ttft_s=round(mean_ttft, 5),
+        p90_ttft_s=round(p90_ttft, 5),
     )
 
 
@@ -344,7 +368,8 @@ def main():
             print(f"\nRunning scheduler={scheduler_name} request_rate={rate} req/s ...")
             result = run_single_benchmark(llm, scheduler_name, dataset, rate, models, tokenizers, max_tokens=args.max_tokens, max_rate=max(args.request_rates))
             print(f"  mean={result.mean_latency_s_per_token:.4f} s/tok  "
-                  f"p90={result.p90_latency_s_per_token:.4f} s/tok")
+                  f"p90={result.p90_latency_s_per_token:.4f} s/tok  "
+                  f"TTFT mean={result.mean_ttft_s:.4f}s p90={result.p90_ttft_s:.4f}s")
             all_results.append(result.__dict__)
 
     with open(args.output, "w") as f:
