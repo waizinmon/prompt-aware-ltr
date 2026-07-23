@@ -1,0 +1,340 @@
+{
+  "dataset1_eval": {
+    "fcfs": {
+      "throughput": [
+        {
+          "tokens_per_second": 61.0165,
+          "requests_per_second": 0.2864,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 53.686,
+          "requests_per_second": 0.252,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 45.7232,
+          "requests_per_second": 0.2146,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 38.0493,
+          "requests_per_second": 0.1786,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 30.737,
+          "requests_per_second": 0.1443,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 27.8757,
+          "requests_per_second": 0.1308,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 24.8233,
+          "requests_per_second": 0.1165,
+          "request_rate": 60.0
+        }
+      ]
+    },
+    "classification": {
+      "throughput": [
+        {
+          "tokens_per_second": 63.6932,
+          "requests_per_second": 0.299,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 31.1761,
+          "requests_per_second": 0.1463,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 31.2383,
+          "requests_per_second": 0.1466,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 31.3682,
+          "requests_per_second": 0.1472,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 25.2664,
+          "requests_per_second": 0.1186,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 24.2556,
+          "requests_per_second": 0.1139,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 22.4704,
+          "requests_per_second": 0.1055,
+          "request_rate": 60.0
+        }
+      ]
+    },
+    "ltr": {
+      "throughput": [
+        {
+          "tokens_per_second": 63.6475,
+          "requests_per_second": 0.2988,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 31.1022,
+          "requests_per_second": 0.146,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 29.9928,
+          "requests_per_second": 0.1408,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 31.2376,
+          "requests_per_second": 0.1466,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 25.1751,
+          "requests_per_second": 0.1182,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 24.2423,
+          "requests_per_second": 0.1138,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 22.409,
+          "requests_per_second": 0.1052,
+          "request_rate": 60.0
+        }
+      ]
+    },
+    "ltr_promptlen": {
+      "throughput": [
+        {
+          "tokens_per_second": 64.5701,
+          "requests_per_second": 0.3031,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 57.1613,
+          "requests_per_second": 0.2683,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 49.8241,
+          "requests_per_second": 0.2339,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 42.2312,
+          "requests_per_second": 0.1982,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 32.5,
+          "requests_per_second": 0.1526,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 30.2252,
+          "requests_per_second": 0.1419,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 24.7771,
+          "requests_per_second": 0.1163,
+          "request_rate": 60.0
+        }
+      ]
+    }
+  },
+  "dataset2_eval": {
+    "fcfs": {
+      "throughput": [
+        {
+          "tokens_per_second": 61.4543,
+          "requests_per_second": 0.067,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 53.3807,
+          "requests_per_second": 0.0582,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 44.7576,
+          "requests_per_second": 0.0488,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 38.2285,
+          "requests_per_second": 0.0417,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 31.0031,
+          "requests_per_second": 0.0338,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 26.6284,
+          "requests_per_second": 0.029,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 24.332,
+          "requests_per_second": 0.0265,
+          "request_rate": 60.0
+        }
+      ]
+    },
+    "classification": {
+      "throughput": [
+        {
+          "tokens_per_second": 60.6124,
+          "requests_per_second": 0.066,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 55.552,
+          "requests_per_second": 0.0605,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 47.2722,
+          "requests_per_second": 0.0515,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 40.282,
+          "requests_per_second": 0.0439,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 31.4072,
+          "requests_per_second": 0.0342,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 25.0492,
+          "requests_per_second": 0.0273,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 22.399,
+          "requests_per_second": 0.0244,
+          "request_rate": 60.0
+        }
+      ]
+    },
+    "ltr": {
+      "throughput": [
+        {
+          "tokens_per_second": 63.3539,
+          "requests_per_second": 0.069,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 55.4338,
+          "requests_per_second": 0.0604,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 45.593,
+          "requests_per_second": 0.0497,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 41.5862,
+          "requests_per_second": 0.0453,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 31.0985,
+          "requests_per_second": 0.0339,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 25.4664,
+          "requests_per_second": 0.0277,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 22.3618,
+          "requests_per_second": 0.0244,
+          "request_rate": 60.0
+        }
+      ]
+    },
+    "ltr_promptlen": {
+      "throughput": [
+        {
+          "tokens_per_second": 64.3826,
+          "requests_per_second": 0.0702,
+          "request_rate": 5.0
+        },
+        {
+          "tokens_per_second": 57.1552,
+          "requests_per_second": 0.0623,
+          "request_rate": 10.0
+        },
+        {
+          "tokens_per_second": 49.777,
+          "requests_per_second": 0.0542,
+          "request_rate": 20.0
+        },
+        {
+          "tokens_per_second": 42.6771,
+          "requests_per_second": 0.0465,
+          "request_rate": 30.0
+        },
+        {
+          "tokens_per_second": 32.7794,
+          "requests_per_second": 0.0357,
+          "request_rate": 40.0
+        },
+        {
+          "tokens_per_second": 30.4224,
+          "requests_per_second": 0.0331,
+          "request_rate": 50.0
+        },
+        {
+          "tokens_per_second": 27.6177,
+          "requests_per_second": 0.0301,
+          "request_rate": 60.0
+        }
+      ]
+    }
+  },
+  "gpu_utilization": {
+    "dataset1_eval": {
+      "gpu_name": "NVIDIA A100-SXM4-40GB",
+      "total_gpu_memory_mb": 40441.4,
+      "peak_allocated_mb": 35055.6,
+      "peak_reserved_mb": 35182.0,
+      "memory_utilization_fraction": 0.8668,
+      "probe_elapsed_s": 2.207,
+      "probe_n_requests": 20,
+      "quantized": false
+    },
+    "dataset2_eval": {
+      "gpu_name": "NVIDIA A100-SXM4-40GB",
+      "total_gpu_memory_mb": 40441.4,
+      "peak_allocated_mb": 35246.4,
+      "peak_reserved_mb": 35378.0,
+      "memory_utilization_fraction": 0.8715,
+      "probe_elapsed_s": 2.205,
+      "probe_n_requests": 20,
+      "quantized": false
+    }
+  }
+}

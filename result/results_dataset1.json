@@ -1,0 +1,198 @@
+[
+  {
+    "scheduler": "fcfs",
+    "request_rate": 5.0,
+    "mean_latency_s_per_token": 0.01638899947484968,
+    "p90_latency_s_per_token": 0.01620695134624839,
+    "n_requests": 16
+  },
+  {
+    "scheduler": "fcfs",
+    "request_rate": 10.0,
+    "mean_latency_s_per_token": 0.018626821227371693,
+    "p90_latency_s_per_token": 0.018626821227371693,
+    "n_requests": 33
+  },
+  {
+    "scheduler": "fcfs",
+    "request_rate": 20.0,
+    "mean_latency_s_per_token": 0.021870714023449447,
+    "p90_latency_s_per_token": 0.02181131998077035,
+    "n_requests": 66
+  },
+  {
+    "scheduler": "fcfs",
+    "request_rate": 30.0,
+    "mean_latency_s_per_token": 0.026281704802421375,
+    "p90_latency_s_per_token": 0.025917355902493,
+    "n_requests": 100
+  },
+  {
+    "scheduler": "fcfs",
+    "request_rate": 40.0,
+    "mean_latency_s_per_token": 0.03253403201603375,
+    "p90_latency_s_per_token": 0.032482645474374294,
+    "n_requests": 133
+  },
+  {
+    "scheduler": "fcfs",
+    "request_rate": 50.0,
+    "mean_latency_s_per_token": 0.03587359756715643,
+    "p90_latency_s_per_token": 0.035527692176401615,
+    "n_requests": 166
+  },
+  {
+    "scheduler": "fcfs",
+    "request_rate": 60.0,
+    "mean_latency_s_per_token": 0.040284792567853535,
+    "p90_latency_s_per_token": 0.039859915152192116,
+    "n_requests": 200
+  },
+  {
+    "scheduler": "classification",
+    "request_rate": 5.0,
+    "mean_latency_s_per_token": 0.01570025971159339,
+    "p90_latency_s_per_token": 0.01570025971159339,
+    "n_requests": 16
+  },
+  {
+    "scheduler": "classification",
+    "request_rate": 10.0,
+    "mean_latency_s_per_token": 0.032075820755774885,
+    "p90_latency_s_per_token": 0.01803987892344594,
+    "n_requests": 33
+  },
+  {
+    "scheduler": "classification",
+    "request_rate": 20.0,
+    "mean_latency_s_per_token": 0.032012029702293346,
+    "p90_latency_s_per_token": 0.02075311541557312,
+    "n_requests": 66
+  },
+  {
+    "scheduler": "classification",
+    "request_rate": 30.0,
+    "mean_latency_s_per_token": 0.031879455750692114,
+    "p90_latency_s_per_token": 0.02347424253821373,
+    "n_requests": 100
+  },
+  {
+    "scheduler": "classification",
+    "request_rate": 40.0,
+    "mean_latency_s_per_token": 0.03957828841717718,
+    "p90_latency_s_per_token": 0.031127350870519876,
+    "n_requests": 133
+  },
+  {
+    "scheduler": "classification",
+    "request_rate": 50.0,
+    "mean_latency_s_per_token": 0.04122758990008889,
+    "p90_latency_s_per_token": 0.03363738767802715,
+    "n_requests": 166
+  },
+  {
+    "scheduler": "classification",
+    "request_rate": 60.0,
+    "mean_latency_s_per_token": 0.04450290675331352,
+    "p90_latency_s_per_token": 0.03706641215831041,
+    "n_requests": 200
+  },
+  {
+    "scheduler": "ltr",
+    "request_rate": 5.0,
+    "mean_latency_s_per_token": 0.015711539424955845,
+    "p90_latency_s_per_token": 0.015711539424955845,
+    "n_requests": 16
+  },
+  {
+    "scheduler": "ltr",
+    "request_rate": 10.0,
+    "mean_latency_s_per_token": 0.03215209329821151,
+    "p90_latency_s_per_token": 0.01808277564123273,
+    "n_requests": 33
+  },
+  {
+    "scheduler": "ltr",
+    "request_rate": 20.0,
+    "mean_latency_s_per_token": 0.033341316537456596,
+    "p90_latency_s_per_token": 0.021614880301058292,
+    "n_requests": 66
+  },
+  {
+    "scheduler": "ltr",
+    "request_rate": 30.0,
+    "mean_latency_s_per_token": 0.03201270864585351,
+    "p90_latency_s_per_token": 0.02357236249372363,
+    "n_requests": 100
+  },
+  {
+    "scheduler": "ltr",
+    "request_rate": 40.0,
+    "mean_latency_s_per_token": 0.03972172782640203,
+    "p90_latency_s_per_token": 0.031240162439644337,
+    "n_requests": 133
+  },
+  {
+    "scheduler": "ltr",
+    "request_rate": 50.0,
+    "mean_latency_s_per_token": 0.04125012886421861,
+    "p90_latency_s_per_token": 0.03365577710792422,
+    "n_requests": 166
+  },
+  {
+    "scheduler": "ltr",
+    "request_rate": 60.0,
+    "mean_latency_s_per_token": 0.044624981879095964,
+    "p90_latency_s_per_token": 0.037168088369071484,
+    "n_requests": 200
+  },
+  {
+    "scheduler": "ltr_promptlen",
+    "request_rate": 5.0,
+    "mean_latency_s_per_token": 0.015487032942473888,
+    "p90_latency_s_per_token": 0.015487032942473888,
+    "n_requests": 16
+  },
+  {
+    "scheduler": "ltr_promptlen",
+    "request_rate": 10.0,
+    "mean_latency_s_per_token": 0.017494340892881155,
+    "p90_latency_s_per_token": 0.017494340892881155,
+    "n_requests": 33
+  },
+  {
+    "scheduler": "ltr_promptlen",
+    "request_rate": 20.0,
+    "mean_latency_s_per_token": 0.020070614758878946,
+    "p90_latency_s_per_token": 0.020070614758878946,
+    "n_requests": 66
+  },
+  {
+    "scheduler": "ltr_promptlen",
+    "request_rate": 30.0,
+    "mean_latency_s_per_token": 0.023679194886462963,
+    "p90_latency_s_per_token": 0.023242070339620113,
+    "n_requests": 100
+  },
+  {
+    "scheduler": "ltr_promptlen",
+    "request_rate": 40.0,
+    "mean_latency_s_per_token": 0.030769266110920356,
+    "p90_latency_s_per_token": 0.028943907469511032,
+    "n_requests": 133
+  },
+  {
+    "scheduler": "ltr_promptlen",
+    "request_rate": 50.0,
+    "mean_latency_s_per_token": 0.033085025371331366,
+    "p90_latency_s_per_token": 0.0317893591709435,
+    "n_requests": 166
+  },
+  {
+    "scheduler": "ltr_promptlen",
+    "request_rate": 60.0,
+    "mean_latency_s_per_token": 0.040359789991353756,
+    "p90_latency_s_per_token": 0.034693621564656496,
+    "n_requests": 200
+  }
+]

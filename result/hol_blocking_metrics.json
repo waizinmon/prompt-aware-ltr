@@ -1,0 +1,62 @@
+{
+  "dataset1_eval": {
+    "fcfs": {
+      "long_prompt_threshold_tokens": 83,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 0.9911,
+      "latency_slope_per_req_rate": 0.000434,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    },
+    "classification": {
+      "long_prompt_threshold_tokens": 83,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 0.7929,
+      "latency_slope_per_req_rate": 0.000524,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    },
+    "ltr": {
+      "long_prompt_threshold_tokens": 83,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 0.7929,
+      "latency_slope_per_req_rate": 0.000526,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    },
+    "ltr_promptlen": {
+      "long_prompt_threshold_tokens": 83,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 0.9357,
+      "latency_slope_per_req_rate": 0.000452,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    }
+  },
+  "dataset2_eval": {
+    "fcfs": {
+      "long_prompt_threshold_tokens": 208,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 0.9744,
+      "latency_slope_per_req_rate": 0.000451,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    },
+    "classification": {
+      "long_prompt_threshold_tokens": 208,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 0.9369,
+      "latency_slope_per_req_rate": 0.000512,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    },
+    "ltr": {
+      "long_prompt_threshold_tokens": 208,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 0.9369,
+      "latency_slope_per_req_rate": 0.000526,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    },
+    "ltr_promptlen": {
+      "long_prompt_threshold_tokens": 208,
+      "long_prompt_fraction_in_dataset": 0.25,
+      "mean_p90_to_mean_ratio_high_load": 1.0,
+      "latency_slope_per_req_rate": 0.000376,
+      "note": "Lower p90/mean ratio and flatter latency slope indicate less HOL blocking. Compare across schedulers at the same request rates for a fair comparison."
+    }
+  }
+}
