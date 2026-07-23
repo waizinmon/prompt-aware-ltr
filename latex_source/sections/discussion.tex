@@ -1,0 +1,58 @@
+\section{Discussion}
+\label{sec:discussion}
+
+The results in Section~\ref{sec:evaluation} suggest that a cheap, non-learned
+signal can meaningfully complement a learned ranking score rather than merely
+duplicate it. Prompt length costs nothing beyond tokenization, is always
+available regardless of how confident or well-calibrated the LTR predictor
+is, and, unlike the predictor's score, cannot itself be affected by
+distribution shift in the prompt distribution. This likely explains why the
+composite scheduler's advantage over the LTR-only scheduler is more
+pronounced on the out-of-distribution dataset than on the in-distribution
+one: the length signal has the most to contribute exactly when the learned
+score is least reliable.
+
+\subsection{Limitations}
+\label{subsec:limitations}
+
+Several limitations qualify these findings. First, prompts in this evaluation
+were submitted to the serving model without applying its chat template; we
+verified in earlier diagnostic runs that this caused a substantial fraction of
+generations to reach the configured maximum token cap rather than terminate
+naturally, which compresses the observed spread of true output lengths and
+should be considered when interpreting the absolute latency and HOL-blocking
+values reported here. Second, the composite weights $\alpha$ and $\beta$ in
+Eq.~\eqref{eq:composite-score} were fixed manually rather than learned or
+tuned per dataset, so the reported results reflect one operating point rather
+than the best achievable trade-off. Third, all scheduling policies in this
+evaluation compute an admission order over the entire batch of requests
+before submission, rather than reordering a continuously arriving stream in
+real time; this differs from FCFS, which processes requests as they truly
+arrive, and is a potential confound when comparing tail-latency behavior
+across policies. Fourth, the evaluation is limited to a single model
+(Llama-3.1-8B-Instruct), a single GPU (one NVIDIA A100), and two
+1{,}000-request held-out sets, which may not capture the full range of
+production traffic patterns or hardware configurations. Finally, the serving
+environment uses a newer vLLM release (0.6.1.post2) than the original LTR
+framework's target version (0.4.1), a substitution required because the
+original version has no prebuilt wheel for the Python 3.12 environment used
+here and because the platform's pre-installed PyTorch build is not
+ABI-compatible with vLLM's compiled CUDA extensions; this limits direct
+numerical comparison to results reported under the original framework's
+software stack.
+
+\subsection{Future Work}
+\label{subsec:future-work}
+
+Over the next six months, we intend to: (1) rerun the full benchmark suite
+with the model's chat template correctly applied, to obtain output-length
+distributions and latency figures free of the max-token-cap artifact
+described above; (2) replace the fixed $\alpha, \beta$ weighting with a
+learned or validation-tuned combination, potentially conditioned on the
+predictor's own confidence; (3) evaluate the composite scheduler under a
+true streaming arrival process rather than a pre-sorted batch, to remove the
+admission-order confound noted above; (4) extend the evaluation to
+additional model sizes and a multi-GPU, tensor-parallel serving
+configuration; and (5) investigate using time-to-first-token directly as a
+scheduling objective, rather than only as an evaluation metric, given its
+sensitivity to queuing delay observed in Section~\ref{subsec:results-ttft}.

@@ -2,7 +2,7 @@
 
 Trained predictor checkpoints. Too large for git — hosted on Google Drive.
 
-Download from: https://drive.google.com/... *(replace with your share link)*
+Download from: https://fduedu-my.sharepoint.com/:f:/g/personal/w_mon_student_fdu_edu/IgAvHVaOSnjZTIrRuoEavoI7AR16ppt9W9SzO8H9SN7xspY?e=jdQ3AC
 
 Place these folders here:
 

@@ -1,0 +1,18 @@
+\begin{table*}[t]
+    \centering
+    \caption{HOL blocking indicators by scheduler: p90/mean latency ratio at
+    high load (lower is better) and latency-vs-request-rate slope in
+    seconds/token per req/s (lower is better).}
+    \label{tab:hol_blocking}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        & \multicolumn{2}{c}{p90/mean ratio} & \multicolumn{2}{c}{Slope ($\times 10^{-4}$)} \\
+        Scheduler & D1 & D2 & D1 & D2 \\
+        \midrule
+        FCFS                        & 0.991 & 0.974 & 4.3 & 4.7 \\
+        Classification              & 0.793 & 0.937 & 5.3 & 5.2 \\
+        LTR                         & 0.793 & 0.937 & 5.2 & 5.2 \\
+        LTR + Prompt Length (ours)  & 0.936 & 1.000 & 4.5 & 3.8 \\
+        \bottomrule
+    \end{tabular}
+\end{table*}

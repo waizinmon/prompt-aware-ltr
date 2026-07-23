@@ -1,0 +1,80 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{\fontfamily{ptm}\selectfont LLM Inference Latency Using Prompt-Aware Learning-to-Rank Scheduling with Secondary Ranking Signals}
+
+\author{
+\IEEEauthorblockN{Wai Zin Mon}
+\IEEEauthorblockA{
+School of Computer Science and Engineering \\
+Fairleigh Dickinson University \\
+Teaneck, NJ, USA \\
+waizinmon77okt@gmail.com}
+\and
+\IEEEauthorblockN{Joy Ogbiko}
+\IEEEauthorblockA{
+School of Computer Science and Engineering \\
+Fairleigh Dickinson University \\
+Teaneck, NJ, USA}
+}
+
+\maketitle
+
+\input{sections/abstract}
+
+\begin{IEEEkeywords}
+LLM inference serving, learning-to-rank, request scheduling, head-of-line blocking, vLLM
+\end{IEEEkeywords}
+
+\clearpage
+\input{sections/introduction}
+
+\clearpage
+\input{sections/background}
+
+\clearpage
+\input{sections/related_work}
+
+\clearpage
+\input{sections/methodology}
+
+\clearpage
+\input{sections/evaluation}
+
+\clearpage
+\input{sections/discussion}
+
+\clearpage
+\input{sections/conclusion}
+
+\clearpage
+\input{sections/appendix}
+
+\clearpage
+\label{sec:references}
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

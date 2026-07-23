@@ -1,0 +1,15 @@
+\begin{table}[t]
+    \centering
+    \caption{Scheduling policies compared in this work.}
+    \label{tab:scheduling_policies}
+    \begin{tabular}{@{}p{1.5cm}p{5.4cm}@{}}
+        \toprule
+        Policy & Admission ordering rule \\
+        \midrule
+        FCFS & Requests admitted in arrival order; no reordering. \\
+        Classification & Requests bucketed into coarse predicted output-length classes; shorter buckets prioritized. \\
+        LTR & Requests ordered by the OPT-125M predictor's learned ranking score, $s_{\mathrm{LTR}}(x)$, alone. \\
+        LTR + Prompt Length (ours) & Requests ordered by the composite score in Eq.~\eqref{eq:composite-score}, combining $s_{\mathrm{LTR}}(x)$ with tokenized prompt length. \\
+        \bottomrule
+    \end{tabular}
+\end{table}

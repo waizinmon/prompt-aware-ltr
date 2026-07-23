@@ -1,0 +1,17 @@
+\begin{table}[t]
+    \centering
+    \caption{Kendall's tau ranking quality against true output length,
+    evaluated on the Dataset 2 (out-of-distribution) held-out set
+    ($n=1{,}000$, $\alpha=0.7$, $\beta=0.3$).}
+    \label{tab:kendalls_tau}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        Score & Kendall's $\tau$ \\
+        \midrule
+        LTR only                   & 0.3445 \\
+        LTR + Prompt Length (ours) & 0.3457 \\
+        \midrule
+        $\Delta$                   & $+0.0011$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}

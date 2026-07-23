@@ -1,0 +1,42 @@
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{LLM Serving Systems and Memory Management}
+\label{subsec:rw-serving}
+
+Orca~\cite{yu2022orca} introduced iteration-level scheduling for
+transformer-based generative models, allowing individual requests to enter
+and leave a batch between decoding steps rather than waiting for the entire
+batch to complete, which is the continuous-batching mechanism this work
+depends on. vLLM~\cite{kwon2023vllm} builds on this idea and additionally
+introduces PagedAttention, which manages the key-value cache in fixed-size
+blocks to reduce memory fragmentation and increase the number of sequences
+that can be served concurrently on a fixed amount of GPU memory. Both systems
+focus on maximizing GPU utilization and aggregate throughput through
+memory-efficient batching; neither prescribes a specific admission-ordering
+policy for the requests that populate each batch, which is the aspect of the
+serving stack this work targets.
+
+\subsection{Output-Length-Aware and Learning-to-Rank Scheduling}
+\label{subsec:rw-scheduling}
+
+A separate line of work argues that batching efficiency alone is insufficient
+if the admission order itself causes short requests to wait behind long ones,
+and proposes estimating output length ahead of time to inform scheduling.
+Response Length Perception and Sequence Scheduling~\cite{zheng2023responselength}
+frames this as a classification problem, training a model to bucket prompts
+into coarse output-length classes and prioritizing shorter buckets; the
+classification-based scheduler evaluated in this paper follows that design.
+Efficient LLM Scheduling by Learning to Rank~\cite{fu2024efficient}, the work
+this project directly extends, instead trains a compact OPT-125M predictor
+with a listwise ranking loss so that its output score orders requests
+consistently with their true relative output lengths, without requiring the
+predictor to commit to a specific length bucket or exact token count. The
+underlying ranking objective follows the learning-to-rank literature more
+broadly, including pairwise formulations such as RankNet~\cite{burges2005ranknet}
+and listwise formulations such as ListMLE~\cite{xia2008listmle}, the loss used
+to train the original predictor in~\cite{fu2024efficient}. This project keeps
+that learned predictor intact and asks whether combining its score with an
+independent, non-learned signal -- prompt length -- improves robustness when
+the predictor's score alone is imperfect, which to our knowledge has not been
+examined in prior scheduling work.

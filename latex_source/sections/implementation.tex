@@ -1,0 +1,36 @@
+\section{Implementation}
+\label{sec:implementation}
+
+The composite scheduler is implemented as a request-ordering step that runs
+before vLLM's own engine is invoked, rather than as a modification to vLLM
+itself. For a batch of prompts, the OPT-125M predictor's score and each
+prompt's tokenized length are computed once, combined via
+Eq.~\eqref{eq:composite-score}, and used to sort the batch; the sorted
+prompts are then submitted to vLLM's offline \texttt{LLM.generate()} API as a
+single call, and vLLM's continuous-batching scheduler manages iteration-level
+admission and eviction from that point onward. This design keeps the
+extension isolated to the scheduling layer and avoids depending on any
+internal vLLM APIs that might change between releases.
+
+Two software-environment deviations from the original LTR framework were
+necessary to run this pipeline on current hardware and are documented here for
+reproducibility. First, the original framework targets vLLM 0.4.1, which has
+no prebuilt wheel for the Python 3.12 environment used in this work and does
+not build from source in that environment; we instead use a current stable
+vLLM release (0.6.1.post2), which also avoids a broken transitive dependency
+(\texttt{pyairports}) that affects guided decoding in vLLM 0.5.x. Second, the
+serving GPU's pre-installed PyTorch build is not ABI-compatible with vLLM's
+compiled CUDA extensions, which required a clean reinstallation of PyTorch as
+part of the vLLM install step rather than reusing the platform-provided build.
+Both deviations affect only the serving environment and not the scheduling
+logic evaluated in this paper, but the underlying vLLM version, being newer
+than the original framework's target, is a relevant factor when comparing
+absolute latency numbers across studies.
+
+Time-to-first-token (TTFT), reported in Section~\ref{sec:evaluation} as a
+secondary indicator of HOL blocking, is computed from vLLM's own per-request
+metrics (\texttt{arrival\_time} and \texttt{first\_token\_time}) attached to
+each \texttt{RequestOutput} object, rather than approximated from aggregate
+batch timing. This metric was added purely additively alongside the existing
+throughput and latency instrumentation and does not alter the scheduling
+logic or the per-token latency values reported for the four policies.

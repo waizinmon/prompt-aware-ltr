@@ -1,0 +1,69 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Large language models (LLMs) are increasingly deployed as interactive services
+where many users submit prompts concurrently and expect low-latency responses.
+Because decoding is autoregressive, a request's total service time is
+proportional to the number of tokens it generates, and that number is not
+known when the request arrives. Serving systems that admit requests in
+first-come-first-served (FCFS) order therefore have no way to distinguish a
+prompt that will generate a handful of tokens from one that will generate
+several hundred. When a long-running request is admitted into a batch ahead of
+several short ones, the short requests are forced to wait behind it for the
+duration of the long request's decoding, a phenomenon commonly referred to as
+head-of-line (HOL) blocking. HOL blocking directly inflates tail latency and
+degrades the perceived responsiveness of the service, even when aggregate GPU
+throughput remains high.
+
+A recent line of work addresses this problem by learning to predict, rather
+than assume, a request's likely output length ahead of time, and using that
+prediction to reorder the admission queue so that requests expected to finish
+quickly are not stuck behind requests expected to run long. One such approach
+trains a compact predictor -- a fine-tuned OPT-125M model -- with a
+learning-to-rank (LTR) objective to produce a relative ranking score for each
+incoming prompt, and schedules requests in order of that score. This is
+effective when the predictor's training distribution matches the requests it
+sees in production, but the score is a single learned signal: if the predictor
+is uncertain or the incoming prompts drift from its training distribution, the
+resulting ranking can degrade with no fallback signal to correct it.
+
+This project asks whether a second, inexpensive, and non-learned signal can
+make the ranking more robust without discarding the learned predictor. The
+tokenized length of a prompt is available immediately, requires no additional
+model inference, and does not depend on the predictor's calibration. We
+combine it with the LTR predictor's score through a weighted composite formula
+and integrate the resulting scheduler into vLLM, a widely used open-source LLM
+serving engine, as a drop-in replacement for the admission-ordering step used
+by the original LTR scheduler. We refer to the resulting scheduler as
+\emph{LTR + Prompt Length} throughout this paper.
+
+The contributions of this work are:
+\begin{itemize}
+    \item A composite ranking score that augments a learned LTR predictor
+    score with tokenized prompt length as a lightweight, always-available
+    secondary signal, requiring no additional model inference at scheduling
+    time.
+    \item An implementation of the composite scheduler inside vLLM's offline
+    serving pipeline, evaluated alongside FCFS, a classification-based
+    baseline, and the original LTR scheduler under identical hardware and
+    workload conditions.
+    \item An empirical evaluation on two 1{,}000-request subsets of
+    LMSYS-Chat-1M -- one in-distribution and one constructed to induce
+    distribution shift -- covering throughput, tail-latency indicators of HOL
+    blocking, time-to-first-token, GPU resource utilization, and ranking
+    quality via Kendall's tau.
+    \item A transparent discussion of the correction applied to an initial
+    sign error in the composite formula, the software-version deviations
+    required to run the pipeline on current hardware, and the limitations of
+    the evaluation methodology.
+\end{itemize}
+
+The remainder of this paper is organized as follows. Section~\ref{sec:background}
+reviews the serving architecture and scheduling concepts this work builds on.
+Section~\ref{sec:related_work} situates our approach relative to existing LLM
+serving and scheduling research. Section~\ref{sec:methodology} describes the
+composite scoring formula, the scheduling policies compared, and the vLLM
+integration used to run them. Section~\ref{sec:evaluation} presents the
+experimental results.
+Section~\ref{sec:discussion} interprets the findings and discusses limitations
+and future work, and Section~\ref{sec:conclusion} concludes.

@@ -1,0 +1,20 @@
+\begin{table}[t]
+    \centering
+    \caption{Composite scoring and predictor training hyperparameters.}
+    \label{tab:hyperparameters}
+    \begin{tabular}{@{}ll@{}}
+        \toprule
+        Parameter & Value \\
+        \midrule
+        $\alpha$ (LTR score weight) & 0.7 \\
+        $\beta$ (prompt-length weight) & 0.3 \\
+        SCALE (length-term scale factor) & 100 \\
+        Predictor backbone & OPT-125M \\
+        Original predictor loss & ListMLE \\
+        Extension predictor loss & Pairwise margin \\
+        Margin ($m$) & 1.0 \\
+        Pair filter threshold ($\delta$) & 0.20 \\
+        Training epochs & 10 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

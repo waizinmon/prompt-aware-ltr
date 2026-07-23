@@ -1,0 +1,51 @@
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Baseline Framework}
+
+We build on the LTR scheduling framework of~\cite{fu2024efficient}, which
+trains an OPT-125M predictor with a ListMLE ranking loss to score prompts by
+expected relative output length and uses that score to reorder the admission
+queue before requests reach vLLM's generation engine. This ranking step
+operates entirely outside vLLM's own continuous-batching scheduler, which
+handles the resulting iteration-level batching and memory management
+unmodified, as shown in Figure~\ref{fig:architecture_pipeline}.
+
+\subsection{Proposed Extension: Composite Scoring}
+
+Table~\ref{tab:scheduling_policies} summarizes the four scheduling policies
+compared in this work. For the proposed extension, each request's admission
+priority is
+\begin{equation}
+    \mathrm{score}(x) = \alpha \, s_{\mathrm{LTR}}(x) \;-\; \beta \, \frac{\mathrm{SCALE}}{\mathrm{len}(x)}
+    \label{eq:composite-score}
+\end{equation}
+where $s_{\mathrm{LTR}}(x)$ is the predictor's learned score for prompt $x$,
+$\mathrm{len}(x)$ is its tokenized length, $\mathrm{SCALE}$ brings the length
+term onto a comparable numeric range to $s_{\mathrm{LTR}}(x)$, and
+$\alpha,\beta$ are fixed weights with $\alpha+\beta=1$. The length term is
+subtracted so that longer prompts, absent strong evidence to the contrary
+from $s_{\mathrm{LTR}}$, receive a comparatively lower score, reflecting the
+assumption that longer prompts more often elicit longer completions.
+Requests are admitted in decreasing order of $\mathrm{score}(x)$; since
+$\mathrm{len}(x)$ comes directly from tokenization, this signal adds no
+inference cost beyond the forward pass already needed for $s_{\mathrm{LTR}}(x)$.
+
+The predictor used for $s_{\mathrm{LTR}}(x)$ in the extension is retrained
+with a pairwise margin ranking loss rather than ListMLE, so its score
+distribution suits combination with the length term; both share the same
+OPT-125M backbone and training set. Table~\ref{tab:hyperparameters} lists the
+composite-scoring weights and training hyperparameters used throughout
+Section~\ref{sec:evaluation}.
+
+\input{tables/scheduling_policies}
+\input{tables/hyperparameters}
+
+\subsection{Implementation Correction}
+\label{subsec:sign-correction}
+
+An early implementation of Eq.~\eqref{eq:composite-score} added the length
+term rather than subtracting it, inverting its intended effect. This was
+corrected prior to the experiments in Section~\ref{sec:evaluation}; we note
+it here for transparency relative to any earlier, uncorrected version of this
+codebase.

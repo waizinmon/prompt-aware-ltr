@@ -1,0 +1,25 @@
+\begin{abstract}
+Autoregressive large language model (LLM) serving systems that schedule requests
+first-come-first-served suffer from head-of-line (HOL) blocking: because the
+output length of a request is unknown until decoding finishes, a single long
+generation can delay many short ones behind it in the same batch. Recent
+learning-to-rank (LTR) schedulers address this by training a small predictor to
+estimate a request's relative output length and using that score to reorder
+the admission queue, but the learned score alone can be miscalibrated,
+particularly for prompts that fall outside the predictor's training
+distribution. This work extends an existing OPT-125M LTR predictor with a
+lightweight, non-learned secondary ranking signal, the tokenized prompt length,
+combined with the predictor's score through a weighted composite formula. The
+secondary signal requires no additional model inference and is available for
+every request at negligible cost.
+
+We integrate the composite scheduler into vLLM and evaluate it against
+first-come-first-served, a classification-based baseline, and the original
+LTR scheduler on two 1{,}000-request subsets of LMSYS-Chat-1M served with
+Llama-3.1-8B-Instruct on a single NVIDIA A100 GPU. The composite scheduler
+achieves the highest mean throughput of the four policies on both the
+in-distribution and out-of-distribution test sets, improving throughput by
+roughly 31.7\% over the original LTR scheduler on the in-distribution set, and
+modestly improves ranking quality under distribution shift, raising Kendall's
+tau from 0.3445 to 0.3457 on the out-of-distribution set.
+\end{abstract}

@@ -1,0 +1,16 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper presented a composite scheduling score that augments a learned
+LTR predictor with tokenized prompt length as a lightweight, always-available
+secondary signal, and integrated it into vLLM alongside FCFS, a
+classification-based baseline, and the original LTR scheduler. Across two
+1{,}000-request LMSYS-Chat-1M subsets served with Llama-3.1-8B-Instruct on a
+single A100 GPU, the composite scheduler achieved the highest mean throughput
+of the four policies on both datasets, reduced time-to-first-token
+substantially at high request rates, and modestly improved ranking quality
+under distribution shift. These results suggest that combining a learned
+ranking signal with an inexpensive, non-learned one is a practical way to make
+output-length-aware LLM scheduling more robust, and the limitations discussed
+in Section~\ref{sec:discussion} outline the concrete steps needed to
+strengthen this evaluation further.

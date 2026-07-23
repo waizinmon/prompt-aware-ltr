@@ -1,0 +1,16 @@
+\begin{table}[t]
+    \centering
+    \small
+    \caption{Mean throughput (tokens/s) by scheduler.}
+    \label{tab:throughput}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        Scheduler & D1 (in-dist.) & D2 (OOD) \\
+        \midrule
+        FCFS                & 40.47 & 40.06 \\
+        Classification      & 32.86 & 41.22 \\
+        LTR                 & 32.80 & 41.06 \\
+        LTR+PL (ours)       & \textbf{43.21} & \textbf{43.82} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
